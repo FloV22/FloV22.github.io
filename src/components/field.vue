@@ -3,6 +3,8 @@
     <div id="title">Terrain n°{{number}}</div>
     <img id="field" src="../assets/badminton-court.svg"/>
     <countdown id="ctdn"/>
+    <button id="start" @click="emit('startTimer')">Début</button>
+    <button id="stop" @click="emit('stopTimer')">Stop</button>
   </div>
 </template>
 
@@ -13,6 +15,12 @@ export default {
   props: ['number'],
   components: {
     countdown
+  },
+  methods: {
+    emit(action) {
+      console.log(action);
+      this.$emit(action);
+    }
   }
 }
 </script>
@@ -20,7 +28,7 @@ export default {
 <style lang="less" scoped>
 #container {
   width: 400px;
-  height: 400px;
+  height: 250px;
   position: relative;
 }
 #ctdn,
@@ -35,15 +43,35 @@ export default {
 }
 #ctdn {
   z-index: 10;
-  top: 43%;
-  left: 33%
+  top: 36%;
+  left: 26%
 }
 #title {
   position: absolute;
-  top: 14%;
+  top: 11%;
   left: 31%;
   font-size: 32px;
   color: #14dd45;
   font-weight: bold;
+}
+#start,
+#stop {
+  position: absolute;
+  z-index: 20;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  top: 40%;
+}
+#start {
+  left: 0%
+}
+#stop {
+  left: 85%;
 }
 </style>

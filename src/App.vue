@@ -3,6 +3,9 @@
     <field number=1></field>
     <field number=2></field>
     <field number=3></field>
+    <field number=4></field>
+    <field number=5></field>
+    <field number=6></field>
   </div>
 </template>
 

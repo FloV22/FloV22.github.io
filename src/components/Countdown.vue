@@ -1,5 +1,5 @@
 <template>
-  <div class="flip-clock" @click="update">
+  <div class="flip-clock" @click="update" @startTimer="startTimer" @stopTimer="stopTimer">
     <tracker 
       v-for="tracker in trackers"
       v-bind:key="tracker.id"
@@ -10,7 +10,6 @@
 
 <script>
 import Tracker from './Tracker';
-import moment from 'moment';
 
 export default {
   name: 'Countdown',
@@ -22,30 +21,28 @@ export default {
     trackers: [{ value: 'Minutes', id: 2},{ value:'Seconds', id: 3}] 
   }),
 
-  created() {
-    this.frame = null;
-  },
-
   components: {
     Tracker
   },
   
-  beforeDestroy(){
-    cancelAnimationFrame(this.frame);
-  },
-  
   mounted() {
-    if ( window['requestAnimationFrame'] ) {
-      this.setCountdown(this.date);
-      this.interval = setInterval(this.update, 1000);
-    }
+    this.setCountdown(this.date);
+    this.interval = setInterval(this.update, 1000);
   },
   
   methods: {
+
+    startTimer() {
+      this.interval = setInterval(this.update, 1000);
+    },
+
+    stopTimer() {
+      clearInterval(this.interval);
+    },
     
     setCountdown(date){
       if ( date ) {
-        this.countdown = moment(date, 'YYYY-MM-DD HH:mm:ss');
+        this.countdown = date;
       } else {
         this.countdown = 200;
       }
