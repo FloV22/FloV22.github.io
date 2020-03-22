@@ -2,9 +2,11 @@
   <div id="container">
     <div id="title">Terrain n°{{number}}</div>
     <img id="field" src="../assets/badminton-court.svg"/>
-    <countdown id="ctdn"/>
-    <button id="start" @click="emit('startTimer')">Début</button>
-    <button id="stop" @click="emit('stopTimer')">Stop</button>
+    <div id="actions-buttons">
+      <countdown v-show="date" id="ctdn" :date="date"/>
+      <button id="start" @click="emit('startTimer')">Début</button>
+      <button id="stop" @click="emit('stopTimer')">Stop</button>
+    </div>
   </div>
 </template>
 
@@ -16,10 +18,20 @@ export default {
   components: {
     countdown
   },
+  data: () => ({
+    date: null
+  }),
+
   methods: {
     emit(action) {
-      console.log(action);
-      this.$emit(action);
+      if (action === 'stopTimer') {
+        this.date = null;
+      } else {
+        this.date = 2;
+      }
+      this.$nextTick(() => {
+        this.$emit(action);
+      });
     }
   }
 }
@@ -27,40 +39,46 @@ export default {
 
 <style lang="less" scoped>
 #container {
-  width: 400px;
-  height: 250px;
+  width: 50%;
+  height: 33%;
   position: relative;
-}
-#ctdn,
-#field {
-  position: absolute;
-  top: 0;
-  left: 0;
+  overflow: hidden;
 }
 #field {
   width: 100%;
   height: 100%;
+  z-index: 0;
+}
+#actions-buttons {
+  position: absolute;
+  width: 80%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 40%;
+  text-align: center;
 }
 #ctdn {
-  z-index: 10;
-  top: 36%;
-  left: 26%
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 #title {
   position: absolute;
-  top: 11%;
-  left: 31%;
-  font-size: 32px;
-  color: #14dd45;
+  top: 9%;
+  left: 43%;
+  font-size: 1.5vw;
+  color: rgb(223, 108, 31);
   font-weight: bold;
 }
 #start,
 #stop {
   position: absolute;
   z-index: 20;
-  background-color: #4CAF50; /* Green */
+  background-color: #0e0f7c;
   border: none;
-  color: white;
+  color: rgb(223, 108, 31);
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -69,9 +87,9 @@ export default {
   top: 40%;
 }
 #start {
-  left: 0%
+  left: 0;
 }
 #stop {
-  left: 85%;
+  right: 0;
 }
 </style>

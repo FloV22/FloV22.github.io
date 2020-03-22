@@ -1,10 +1,10 @@
 <template>
   <span v-show="show" class="flip-clock__piece">
     <span class="flip-clock__card flip-card">
-      <b class="flip-card__top">{{current}}</b>
-      <b class="flip-card__bottom" :current-value=current></b>
-      <b class="flip-card__back" :current-value=previous></b>
-      <b class="flip-card__back-bottom" :current-value=previous></b>
+      <b class="flip-card__top">{{zerofill(current)}}</b>
+      <b class="flip-card__bottom" :current-value=zerofill(current)></b>
+      <b class="flip-card__back" :current-value=zerofill(previous)></b>
+      <b class="flip-card__back-bottom" :current-value=zerofill(previous)></b>
     </span>
   </span>
 </template>
@@ -19,7 +19,7 @@ export default {
     show: false
   }),
 
-  filters: {
+  methods: {
     zerofill(value) {
       return ( value < 10 && value > -1 ? '0' : '' ) + value;
     }
@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .flip-clock {
   perspective: 600px;
   margin: 0 auto;
@@ -82,15 +82,6 @@ export default {
   line-height: 0.95;
 }
 
-@media (min-width: 1000px) {
-  .flip-clock__slot { font-size: 1.2rem; }
-  .flip-card { font-size: 3rem; }
-}
-
-
-/*////////////////////////////////////////*/
-
-
 .flip-card__top,
 .flip-card__bottom,
 .flip-card__back-bottom,
@@ -98,8 +89,8 @@ export default {
 .flip-card__back::after {
   display: block;
   height: @halfHeight;
-  color: #ccc;
-  background: #14dd45;
+  color: rgb(223, 108, 31);
+  background: #0e0f7c;
   padding: 0.23em 0.25em 0.4em;
   border-radius: @borderRadius @borderRadius 0 0;
   transform-style: preserve-3d;
@@ -108,12 +99,12 @@ export default {
 
 .flip-card__bottom,
 .flip-card__back-bottom {
-  color: #FFF;
+  color: rgb(223, 108, 31);
   position: absolute;
   top: 50%;
   left: 0;
   border-top: solid 1px #000;
-  background: #14dd45;
+  background: #0e0f7c;
   border-radius: 0 0 @borderRadius @borderRadius;
   pointer-events: none;
   overflow: hidden;

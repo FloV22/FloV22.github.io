@@ -21,17 +21,21 @@ export default {
 </script>
 
 <style>
+html, body {
+    margin: 0;
+    height: 100%;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  min-height: 100%;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  background-image: radial-gradient( circle farthest-corner at 0.2% 0.3%,  rgba(3,144,232,1) 0%, rgba(2,97,156,1) 89.9% );
 }
 #app > * {
   float: 0 0 auto;
   width: 50%;
-  margin-left: 10%;
-  margin-right: 10%;
 }
 </style>

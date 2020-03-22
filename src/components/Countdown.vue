@@ -1,5 +1,5 @@
 <template>
-  <div class="flip-clock" @click="update" @startTimer="startTimer" @stopTimer="stopTimer">
+  <div class="flip-clock">
     <tracker 
       v-for="tracker in trackers"
       v-bind:key="tracker.id"
@@ -18,7 +18,16 @@ export default {
 
   data: () => ({
     time: {},
-    trackers: [{ value: 'Minutes', id: 2},{ value:'Seconds', id: 3}] 
+    trackers: [
+      {
+        value: 'Minutes', 
+        id: 2
+      },
+      { 
+        value: 'Seconds',
+        id: 3
+      }
+    ] 
   }),
 
   components: {
@@ -26,30 +35,39 @@ export default {
   },
   
   mounted() {
-    this.setCountdown(this.date);
-    this.interval = setInterval(this.update, 1000);
+    this.$parent.$on('startTimer', this.startTimer);
+    this.$parent.$on('stopTimer', this.stopTimer);
+  },
+
+  destroyed() {
+    this.$parent.$off('startTimer');
+    this.$parent.$off('stopTimer');
   },
   
   methods: {
 
     startTimer() {
+      if (this.interval) {
+        return;
+      }
+      this.setCountdown(this.date);
       this.interval = setInterval(this.update, 1000);
     },
 
     stopTimer() {
+      document.getElementById('ctdn').classList.remove('blinking');
+      this.countdown = null;
       clearInterval(this.interval);
+      this.interval = null;
     },
     
     setCountdown(date){
-      if ( date ) {
-        this.countdown = date;
-      } else {
-        this.countdown = 200;
-      }
+      this.countdown = parseInt(date,10);
     },
     
     update() {
       if (this.countdown-- < 0) {
+        document.getElementById('ctdn').classList.add('blinking');
         clearInterval(this.interval);
         return;
       }
@@ -64,3 +82,20 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.blinking {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+</style>
