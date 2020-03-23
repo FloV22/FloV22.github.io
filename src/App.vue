@@ -1,11 +1,14 @@
 <template>
-  <div id="app">
-    <field number=1></field>
-    <field number=2></field>
-    <field number=3></field>
-    <field number=4></field>
-    <field number=5></field>
-    <field number=6></field>
+  <div id="container">
+    <header>
+      <img src="./assets/p2b.png"/>
+      <span>
+        Badminton Timer
+      </span>
+    </header>
+    <div id="app" >
+      <field v-for="(number, index) in fields" :key="`number-${index}`" :number=number></field>
+    </div>
   </div>
 </template>
 
@@ -14,6 +17,9 @@ import field from './components/field.vue'
 
 export default {
   name: 'App',
+  data: () => ({
+    fields: [1,2,3,4,5,6]
+  }),
   components: {
     field
   }
@@ -25,9 +31,33 @@ html, body {
     margin: 0;
     height: 100%;
 }
+header {
+  display: flex;
+  width: 100%;
+  height: 6%;
+  color: rgb(223, 108, 31);
+  padding: 15px 32px;
+  text-decoration: none;
+  font-size: 32px;
+  font-weight: bold;
+  background-color: #0e0f7c;
+}
+span {
+  vertical-align: center;
+  margin-left: 10px;
+  margin-top: 2px;
+}
+img {
+  border-radius: 50%;
+  width: 50px;
+}
+#container {
+  width: 100%;
+  height: 100%;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  height: 100%;
+  height: 95%;
   width: 100%;
   display: flex;
   flex-direction: row;

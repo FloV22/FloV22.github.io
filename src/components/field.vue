@@ -27,7 +27,7 @@ export default {
       if (action === 'stopTimer') {
         this.date = null;
       } else {
-        this.date = 2;
+        this.date = 160;
       }
       this.$nextTick(() => {
         this.$emit(action);
@@ -69,6 +69,7 @@ export default {
   top: 9%;
   left: 43%;
   font-size: 1.5vw;
+  font-weight: bold;
   color: rgb(223, 108, 31);
   font-weight: bold;
 }
@@ -84,6 +85,7 @@ export default {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  font-weight: bold;
   top: 40%;
 }
 #start {
