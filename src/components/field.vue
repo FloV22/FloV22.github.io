@@ -3,7 +3,7 @@
     <div id="title">Terrain n°{{number}}</div>
     <img id="field" src="../assets/badminton-court.svg"/>
     <div id="actions-buttons">
-      <countdown v-show="date" id="ctdn" :date="date"/>
+      <countdown v-if="date" id="ctdn" :date="date"/>
       <button id="start" @click="emit('startTimer')">Début</button>
       <button id="stop" @click="emit('stopTimer')">Stop</button>
     </div>
@@ -14,7 +14,7 @@
 import countdown from './Countdown';
 
 export default {
-  props: ['number'],
+  props: ['number', 'initialTime'],
   components: {
     countdown
   },
@@ -27,7 +27,7 @@ export default {
       if (action === 'stopTimer') {
         this.date = null;
       } else {
-        this.date = 160;
+        this.date = this.initialTime;
       }
       this.$nextTick(() => {
         this.$emit(action);
