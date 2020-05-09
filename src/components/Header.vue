@@ -2,7 +2,7 @@
   <header class="headerStyle">
     <div class="center">
       <img src="../assets/p2b.png"/>
-      Badminton Timer
+      <p class="title">Temps d'échauffement</p>
     </div>
     <div class="center">
       <a-time-picker v-model="value" @change=onChange></a-time-picker>
@@ -47,6 +47,11 @@ export default {
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
+
+    .title {
+      padding-left: 10px;
+      padding-top: 25px;
+    }
   }
   img {
     border-radius: 50%;

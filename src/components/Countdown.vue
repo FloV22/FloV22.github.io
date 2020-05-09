@@ -1,5 +1,5 @@
 <template>
-  <div class="flip-clock">
+  <div :id="id" class="flip-clock">
     <tracker 
       v-for="tracker in trackers"
       v-bind:key="tracker.id"
@@ -14,7 +14,7 @@ import Tracker from './Tracker';
 export default {
   name: 'Countdown',
   
-  props: ['date'],
+  props: ['date', 'id'],
 
   data: () => ({
     time: {},
@@ -66,8 +66,8 @@ export default {
     },
     
     update() {
-      if (this.countdown-- < 0) {
-        document.getElementById('ctdn').classList.add('blinking');
+      if (this.countdown-- <= 0) {
+        document.getElementById(this.id).classList.add('blinking');
         clearInterval(this.interval);
         return;
       }

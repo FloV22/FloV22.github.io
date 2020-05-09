@@ -3,7 +3,7 @@
     <div id="title">Terrain n°{{number}}</div>
     <img id="field" src="../assets/badminton-court.svg"/>
     <div id="actions-buttons">
-      <countdown v-if="date" id="ctdn" :date="date"/>
+      <countdown v-if="date" :id="id" class="ctdn" :date="date"/>
       <button id="start" @click="emit('startTimer')">Début</button>
       <button id="stop" @click="emit('stopTimer')">Stop</button>
     </div>
@@ -18,9 +18,12 @@ export default {
   components: {
     countdown
   },
-  data: () => ({
-    date: null
-  }),
+  data: function() {
+    return {
+      date: null,
+      id: `ctdn-${this.number}`
+    };
+  },
 
   methods: {
     emit(action) {
@@ -58,7 +61,7 @@ export default {
   top: 40%;
   text-align: center;
 }
-#ctdn {
+.ctdn {
   position: absolute;
   left: 0;
   right: 0;
