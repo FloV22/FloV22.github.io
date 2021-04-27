@@ -1,10 +1,12 @@
 <template>
   <div id="container">
-    <div id="title">Terrain n°{{number}}</div>
-    <img id="field" src="../assets/badminton-court.svg"/>
+    <div id="title">
+      <p>Terrain n°{{number}}</p>
+    </div>
     <div id="actions-buttons">
-      <countdown v-if="date" :id="id" class="ctdn" :date="date"/>
       <button id="start" @click="emit('startTimer')">Début</button>
+      <countdown v-if="date" :id="id" class="ctdn" :date="date"/>
+      <div v-if="!!date" id="empty"></div>
       <button id="stop" @click="emit('stopTimer')">Stop</button>
     </div>
   </div>
@@ -42,59 +44,57 @@ export default {
 
 <style lang="less" scoped>
 #container {
-  width: 50%;
-  height: 33%;
-  position: relative;
-  overflow: hidden;
+  height: calc(100% / 3);
+  background-image: url("../assets/badminton-court.svg");
+  background-size: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  flex-grow: 1;
+  flex-basis: 50%;
+  padding-right: 10px;
 }
+
+button {
+  height: 40px;
+}
+
 #field {
   width: 100%;
   height: 100%;
   z-index: 0;
 }
 #actions-buttons {
-  position: absolute;
-  width: 80%;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  top: 40%;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin: 0 60px;
 }
 .ctdn {
-  position: absolute;
   left: 0;
   right: 0;
   margin: 0 auto;
 }
 #title {
-  position: absolute;
-  top: 9%;
-  left: 43%;
-  font-size: 1.5vw;
+  text-align: center;
+  height: 40%;
+  font-size: 24px;
   font-weight: bold;
   color: rgb(223, 108, 31);
   font-weight: bold;
+  margin: 0;
 }
 #start,
 #stop {
-  position: absolute;
-  z-index: 20;
   background-color: #0e0f7c;
-  border: none;
   color: rgb(223, 108, 31);
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   font-weight: bold;
-  top: 40%;
-}
-#start {
-  left: 0;
-}
-#stop {
-  right: 0;
+  padding:0.3em 1.2em;
+  border: 0.16em solid rgba(255,255,255,0);
+  border-radius: 2em;
 }
 </style>

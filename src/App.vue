@@ -40,10 +40,9 @@ html, body {
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  height: 95%;
+  height: 92%;
   width: 100%;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   background-image: radial-gradient( circle farthest-corner at 0.2% 0.3%,  rgba(3,144,232,1) 0%, rgba(2,97,156,1) 89.9% );
 }
