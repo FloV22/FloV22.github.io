@@ -1,6 +1,6 @@
 <template>
   <div :id="id" class="flip-clock">
-    <tracker 
+    <tracker
       v-for="tracker in trackers"
       v-bind:key="tracker.id"
       :property="tracker.value"
@@ -9,78 +9,82 @@
 </template>
 
 <script>
-import Tracker from './Tracker';
+import Tracker from "./Tracker";
 
 export default {
-  name: 'Countdown',
-  
-  props: ['date', 'id'],
+  name: "Countdown",
+
+  props: ["date", "id"],
 
   data: () => ({
     time: {},
     trackers: [
       {
-        value: 'Minutes', 
-        id: 2
+        value: "Minutes",
+        id: 2,
       },
-      { 
-        value: 'Seconds',
-        id: 3
-      }
-    ] 
+      {
+        value: "Seconds",
+        id: 3,
+      },
+    ],
   }),
 
   components: {
-    Tracker
+    Tracker,
   },
-  
+
   mounted() {
-    this.$parent.$on('startTimer', this.startTimer);
-    this.$parent.$on('stopTimer', this.stopTimer);
+    this.$parent.$on("startTimer", this.startTimer);
+    this.$parent.$on("stopTimer", this.stopTimer);
   },
 
   destroyed() {
-    this.$parent.$off('startTimer');
-    this.$parent.$off('stopTimer');
+    this.$parent.$off("startTimer");
+    this.$parent.$off("stopTimer");
   },
-  
-  methods: {
 
+  methods: {
     startTimer() {
-      if (this.interval) {
-        return;
-      }
+      this.stopTimer();
       this.setCountdown(this.date);
       this.interval = setInterval(this.update, 1000);
     },
 
     stopTimer() {
-      document.getElementById('ctdn').classList.remove('blinking');
+      this.blink(false);
       this.countdown = null;
       clearInterval(this.interval);
       this.interval = null;
     },
-    
-    setCountdown(date){
-      this.countdown = parseInt(date,10);
+
+    setCountdown(date) {
+      this.countdown = parseInt(date, 10);
     },
-    
+
+    blink(add = false) {
+      const el = document.getElementById(this.id);
+      if (el) {
+        add ? el.classList.add("blinking") : el.classList.remove("blinking");
+      }
+    },
+
     update() {
       if (this.countdown-- <= 0) {
-        document.getElementById(this.id).classList.add('blinking');
+        this.blink(true);
         clearInterval(this.interval);
         return;
       }
 
-      this.time.Seconds = Math.floor(this.countdown  % 60);
-      this.time.Minutes = Math.floor((this.countdown / 60) % 60);      
+      this.time.Seconds = Math.floor(this.countdown % 60);
+      this.time.Minutes = Math.floor((this.countdown / 60) % 60);
       this.time.Total = this.countdown;
-      
-      this.$emit('time',this.time);
+
+      this.$emit("time", this.time);
       return this.time;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
